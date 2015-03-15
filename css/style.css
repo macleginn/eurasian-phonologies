@@ -1,0 +1,147 @@
+body {
+	font-family: 'open sans';
+	padding: 0;
+	margin: 0;
+	overflow: scroll;
+}
+
+div {
+	display: inline-block;
+}
+
+.hrefHolder {
+	height: 25px;
+	padding: 5px;
+	padding-right: 5px;
+	margin: 0;
+}
+
+.hrefHolder:hover {
+	background-color: white;
+}
+
+.phono_tables {
+	margin-top: 20px;
+	width: 800;
+	padding: 0;
+}
+
+.phono_tables h1 {
+	margin-top: 0;
+}
+
+.phono_tables table {
+	border-collapse: collapse;
+	font-family: Tahoma;
+}
+
+.phono_tables td {
+	border: 1px solid black;
+	padding: 3px;
+}
+
+#header {
+	padding-left: 30px;
+	position: absolute;
+	left: 100;
+	top: 50;
+	height: 80px;
+	width: 100%;
+	text-align: left;
+	background-color: Beige;
+}
+
+#menu {
+	height: 35px;
+	vertical-align: middle;
+	position: absolute;
+	padding-left: 25px;
+	left: 0;
+	top: 80px;
+	text-align: left;
+	width: 100%;
+	background-color: PaleGoldenRod;
+}
+
+#menu a {
+	margin: 0;
+	color: inherit;
+	font-weight: bolder;
+	/*font-variant: small-caps;*/
+	font-size: 14pt;
+	text-decoration: none;
+}
+
+#header h1 {
+	text-align: inherit;
+}
+
+#menu a:visited {
+	color: inherit;
+}
+
+#main {
+	background-color: white;
+	width: 100%;
+	height: 600px;
+	position: absolute;
+	left: 0;
+	top: 115px;
+}
+
+select#families, select#groups {
+	width: 150px;
+}
+
+div#reportHolder {
+	margin-left: 30px;
+}
+
+.search_label, .reportCanvas {
+	display: inline-block;
+	width: 200px;
+}
+
+table.languageList tr:nth-child(even) {
+	background-color: Lightgray;
+}
+
+div#searchFields, div#reportCanvas {
+	width: 80%;
+	padding-left: 30px;
+	padding-top: 15px;
+}
+
+div#reportCanvas {
+	margin-bottom: 30px;
+	font-family: tahoma;
+}
+
+p.info {
+	margin-top: 10px;
+	font-size: 10pt;
+}
+
+span.sc {
+	font-variant: small-caps;
+}
+
+span.sc:hover {
+	background-color: Beige;
+	cursor: pointer;
+}
+
+div#about {
+	width: 800px;
+	margin-left: 30px;
+	padding-bottom: 30px;
+}
+
+.hoverRed:hover {
+	background-color: Beige;
+	cursor: pointer;
+}
+
+.listViewList {
+	width: 250px;
+}

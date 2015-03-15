@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="jquery-2.1.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" charset="utf-8">
+		google.load("visualization", "1", {packages:["corechart"]});
+	</script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+	<script src="main.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	$(document).ready(function() {
+		var dateObj = new Date();
+		var month = (dateObj.getUTCMonth() + 1).toString(); //months from 1-12
+		if (month.length == 1) {
+			month = "0" + month;
+		}
+		var day = dateObj.getUTCDate();
+		var year = dateObj.getUTCFullYear();
+		var newdate = year + "-" + month + "-" + day;
+		$(".date").html(newdate);
+		$.ajax({
+			url: "http://eurasianphonology.info/jsonp",
+			dataType: "jsonp",
+			data: {
+				stats: "stats",
+				myCallback: "injectStats"
+			}	
+		});
+	});
+	</script>
+	<title>The database of Eurasian phonological inventories</title>
+</head>
+<body>
+<div id="header">
+	<h1>The database of Eurasian phonological inventories</h1>
+</div>
+<div id="menu">
+	<div class="hrefHolder"><a href="#" onclick="location.reload();">Home</a></div>
+	<div class="hrefHolder"><a href="#" onclick="showMapView()">Mapview</a></div>
+	<div class="hrefHolder"><a href="#" onclick="showListView()">Listview</a></div>
+	<div class="hrefHolder"><a href="#" onclick="showSegmentView()">Segments</a></div>
+	<div class="hrefHolder"><a href="#" onclick="showReportPage()">Family / group reports</a></div>
+	<div class="hrefHolder"><a href="#" onclick="showSearchPage()">Search</a></div>
+</div>
+<div id="main">
+<div id="about">
+<h2>About</h2>
+<p>This site is an interface to the database of Eurasian phonological inventories. The database was conceived and implemented by <a href="https://rggu.academia.edu/DmitryNikolaev" title="">Dmitry Nikolayev</a> (dsnikolaev [at] gmail [dot] com) with contributions from Andrey Nikulin and Anton Kukhto and financial support from <a href="http://ffli.ru" title="Foundation for fundamental studies in linguistics">Foundation for fundamental studies in linguistics</a>. The database includes inventories and additional data for <span id="nvars">.</span> language varieties of Eurasia, including <span id="nlangs">.</span> languages and <span id="ndials">.</span> dialects, with around 150 languages planned for inclusion. The data were gleaned from grammatical descriptions of individual language varieties and reference works on language families. No recycling of existing databases was undertaken.</p>
+<h2>How to access the data</h2>
+<p>There are three views of the database: <span class="sc" onclick="showMapView()">mapview</span>, <span class="sc" onclick="showListView()">listview</span>, and <span class="sc" onclick="showSegmentView()">segment view</span>. The <span class="sc" onclick="showMapView()">mapview</span> shows all the languages on the map with colours of the points corresponding to families. The entry on the languages can be accessed by clicking on the markers. The <span class="sc" onclick="showListView()">listview</span> shows the languages organised according to their genealogical affiliation and in the alphabetical order. The two-tier description consisting of family (~Indo-European) and group (~Slavic, Germanic) is used. The <span class="sc" onclick="showSegmentView()">segment view</span> presents all the segments that can be found in the languages in the database. The distribution of each segment can be accessed by clicking on it.</p>
+<p><span class="sc" onclick="showReportPage()">Family / group reports</span> section provides some info on particular families and groups. The <span class="sc" onclick="showSearchPage()">search</span> section provides exact and fuzzy phoneme search, as well as multiple phoneme search and search for combinations of features in inventories.</p>
+<h2>Data dump</h2>
+<p>The latest version of the database can be downloaded <a href="phono_dbase_IPA.json">as a JSON-file</a>.
+<h2>Source code</h2>
+<p>The database-handling scripts used in this project including IPA parser and tabulator and the source code for this site are on GitHub.</p>
+<h2>Cite</h2>
+<p>Nikolayev, Dmitry; Andrey Nikulin; and Anton Kukhto. 2015. The database of Eurasian phonological inventories. (Available online at http://eurasianphonology.info ; Accessed on <span class="date"></span>.)</p>
+<p>To cite individual language descriptions, give the source provided in the database record followed by In: Nikolayev, Dmitry; Andrey Nikulin; and Anton Kukhto. 2015. The database of Eurasian phonological inventories. (Available online at http://eurasianphonology.info ; Accessed on <span class="date"></span>.)</p>
+</div>
+</div>
+</body>
+</html>
