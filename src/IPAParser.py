@@ -134,7 +134,7 @@ POST_FEATURES = {
     '\u0319': 'retracted-tongue-root',
     '\u031a': 'unreleased',
     '\u033a': 'apical',
-    '\u02e2': 'affricated'
+    '\u02e2': 'affricated',
     '\u1dbb': 'affricated'
 }
 
