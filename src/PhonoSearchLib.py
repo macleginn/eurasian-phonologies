@@ -8,6 +8,8 @@ from IPATabulator import CONS_ROW_NAMES, CONS_COL_NAMES
 from IPATabulator import VOW_ROW_NAMES, VOW_COL_NAMES
 from IPATabulator import processInventory, tabulateAllSegments
 
+CONS_COL_NAMES.append('interdental')
+
 class LangSearchEngine:
     def __init__(self, path, with_dialects):
         with open(path, 'r', encoding = 'utf-8') as inp:
@@ -57,7 +59,10 @@ class LangSearchEngine:
             self.family_group_dic[key] = self.lang_dic[key]["gen"]
 
             family = self.lang_dic[key]["gen"][0]
-            group = self.lang_dic[key]["gen"][1]
+            if self.lang_dic[key]["gen"][1]:
+                group = self.lang_dic[key]["gen"][1]
+            else:
+                group = family + "_ungrouped"
 
             # Which families contain which groups.
             if family not in self.phyla_dic:
@@ -109,13 +114,13 @@ class LangSearchEngine:
         if not phono_string:
             return ""
         else:
-            return escapeHTML4JSON(processInventory("Common phonemes", phono_string, True))
+            return processInventory("Common phonemes", phono_string, True)
 
     def get_table(self, lang):
         phonemes = self.inv_dic[lang]
         phono_string = ', '.join(self.all_phonemes[phoneme] for phoneme in phonemes)
         out = StringIO()
-        out.write('<div class="phono_tables"><h1>%s</h1>' % (lang.split('#')[0]))
+        out.write('<div class="phono_tables"><h3>%s</h3>' % (lang.split('#')[0]))
         if self.lang_dic[lang]["code"] == '0':
             code = '-'
         else:
@@ -128,19 +133,19 @@ class LangSearchEngine:
             out.write('<p><b>Group:</b> %s</p>' % "–")
         out.write(processInventory(lang, phono_string, False)) # Vowels and consonants.
         if self.lang_dic[lang]["tones"]:
-            out.write("<h2>Tones</h2><p>%s</p>\n" % ', '.join(self.lang_dic[lang]["tones"]))
+            out.write("<h4>Tones</h2><p>%s</p>\n" % ', '.join(self.lang_dic[lang]["tones"]))
         if self.lang_dic[lang]["syllab"]:
-            out.write("<h2>Syllable structure</h2><p>%s</p>\n" % self.lang_dic[lang]["syllab"])
+            out.write("<h4>Syllable structure</h2><p>%s</p>\n" % self.lang_dic[lang]["syllab"])
         if self.lang_dic[lang]["cluster"]:
-            out.write("<h2>Initial clusters</h2><p>%s</p>\n" % self.lang_dic[lang]["cluster"])
+            out.write("<h4>Initial clusters</h2><p>%s</p>\n" % self.lang_dic[lang]["cluster"])
         if self.lang_dic[lang]["finals"]:
-            out.write("<h2>Word-final clusters and segments</h2><p>%s</p>\n" % self.lang_dic[lang]["finals"])
-        out.write("<h3>Source</h3><p>%s</p>\n" % self.lang_dic[lang]["source"])
+            out.write("<h4>Word-final clusters and segments</h2><p>%s</p>\n" % self.lang_dic[lang]["finals"])
+        out.write("<h4>Source</h3><p>%s</p>\n" % self.lang_dic[lang]["source"])
         if self.lang_dic[lang]["comment"]:
-            out.write("<h3>Commentary</h3><p>%s</p>\n" % self.lang_dic[lang]["comment"])
-        out.write("<h3>Added by</h3><p>%s</p>\n" % self.lang_dic[lang]["contr"])
+            out.write("<h4>Commentary</h3><p>%s</p>\n" % self.lang_dic[lang]["comment"])
+        out.write("<h4>Added by</h3><p>%s</p>\n" % self.lang_dic[lang]["contr"])
         out.write('</div>')
-        return escapeHTML4JSON(out.getvalue())
+        return out.getvalue()
 
     def get_full_table(self):
         segments = ', '.join([self.all_phonemes[key] for key in self.all_phonemes])
@@ -149,7 +154,7 @@ class LangSearchEngine:
         out.write('<p>(<em>Click on the phonemes to see their distribution.</em>)</p>\n')
         out.write(tabulateAllSegments(segments))
         out.write('</div>')
-        return escapeHTML4JSON(out.getvalue())
+        return out.getvalue()
 
     def get_inv_sizes(self, langs_to_report):
         report = {

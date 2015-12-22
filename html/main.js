@@ -3,7 +3,7 @@ var colorNames = ["aquamarine", "brown", "burlywood", "cadetblue", "chartreuse",
 // Store data for the list view and the report page.
 var phyloData, groupData, isolates;
 $.ajax({
-		url: "http://eurasianphonology.info/jsonp",
+		url: "http://192.169.217.229/jsonp",
 		jsonp: "callback",
 		dataType: "jsonp",
 		data: {
@@ -58,7 +58,7 @@ addEvent(window, "resize", resizeMap);
 
 function showMapView() {
 	$.ajax({
-			url: "http://eurasianphonology.info/jsonp",
+			url: "http://192.169.217.229/jsonp",
 			dataType: "jsonp",
 			data: {
 				dataForMap: "true"
@@ -73,6 +73,19 @@ function displayTable(data) {
 	$("#main").append($("<br/>"));
 	$("#main").append(clearHTML(data));
 	$(".phono_tables").css({"margin-left": "30px"});
+}
+
+function showMap() {
+	$("#main").empty();
+	var height = $(window).height() - 115;
+	$("#main").css({"height": height});
+	var center = new google.maps.LatLng(48, 87.637515);
+	var mapOptions = {
+			zoom: 3,
+			center: center,
+			mapTypeId: google.maps.MapTypeId.SATELLITE
+		};
+	var map = new google.maps.Map(document.getElementById('main'), mapOptions);
 }
 
 function addToMap(data) {
@@ -118,7 +131,7 @@ function addToMap(data) {
 			return function() {
 				currentMarker = marker;
 				$.ajax({
-					url: "http://eurasianphonology.info/jsonp",
+					url: "http://192.169.217.229/jsonp",
 					dataType: "jsonp",
 					data: {
 						provideInventoryTable: langId,
@@ -205,7 +218,7 @@ function repopulateGroups() {
 function fetchFamilyReport(element) {
 	var family = $("#families").val();
 	$.ajax({
-		url: "http://eurasianphonology.info/jsonp",
+		url: "http://192.169.217.229/jsonp",
 		dataType: "jsonp",
 		data: {
 			report_type: "family",
@@ -271,7 +284,7 @@ function showFamilyReport(data) {
 function fetchGroupReport(element) {
 	var group = $("#groups").val();
 	$.ajax({
-		url: "http://eurasianphonology.info/jsonp",
+		url: "http://192.169.217.229/jsonp",
 		dataType: "jsonp",
 		data: {
 			report_type: "group",
@@ -406,7 +419,7 @@ function showSearchPage() {
 	
 	searchFields.append($("<label>").attr("for", "exact_search").text("Exact phoneme search: ").attr("class", "search_label"));
 	searchFields.append($("<input>").attr("type", "text").attr("id", "exact_search"));
-	searchFields.append($("<input>").attr("type", "button").attr("id", "exact_search_btn").attr("value", "Sumbit").attr("onclick", "sendQuery(this)"));
+	searchFields.append($("<input>").attr("type", "button").attr("id", "exact_search_btn").attr("value", "Submit").attr("onclick", "sendQuery(this)"));
 	searchFields.append($("<p>").attr("class", "info").html(
 		"Input a phoneme in terms of IPA symbols. Online tools such as <a href=\"http://ipa.typeit.org/full/\" target=\"_blank\">Type IPA</a> can be used for typing convenience. All inventories including exactly this phoneme will be returned. An example search: ‘t̪s̪ʰʷʲ’."
 		))
@@ -414,7 +427,7 @@ function showSearchPage() {
 	
 	searchFields.append($("<label>").attr("for", "superset_search").text("Fuzzy phoneme search: ").attr("class", "search_label"));
 	searchFields.append($("<input>").attr("type", "text").attr("id", "superset_search"));
-	searchFields.append($("<input>").attr("type", "button").attr("id", "superset_search_btn").attr("value", "Sumbit").attr("onclick", "sendQuery(this)"));
+	searchFields.append($("<input>").attr("type", "button").attr("id", "superset_search_btn").attr("value", "Submit").attr("onclick", "sendQuery(this)"));
 	searchFields.append($("<p>").attr("class", "info").html(
 		"Input a base phoneme in terms of IPA symbols. The search engine will provide all phonemes from the database which include all the features of the base phoneme along with their distributions. An example search: ‘p’."
 		))
@@ -422,7 +435,7 @@ function showSearchPage() {
 	
 	searchFields.append($("<label>").attr("for", "multiple_search").text("Multiple phoneme search: ").attr("class", "search_label"));
 	searchFields.append($("<input>").attr("type", "text").attr("id", "multiple_search"));
-	searchFields.append($("<input>").attr("type", "button").attr("id", "multiple_search_btn").attr("value", "Sumbit").attr("onclick", "sendQuery(this)"));
+	searchFields.append($("<input>").attr("type", "button").attr("id", "multiple_search_btn").attr("value", "Submit").attr("onclick", "sendQuery(this)"));
 	searchFields.append($("<p>").attr("class", "info").html(
 		"Input a list of comma-separated phonemes in terms of IPA symbols. Some or all of the phonemes can be preceded by a ‘-’ symbol. A list of inventories having all the phonemes without ‘-’ and lacking all the phonemes with ‘-’ will be returned. An example search: ‘a, -b, cʰ, -dʲ’."
 		))
@@ -430,7 +443,7 @@ function showSearchPage() {
 	
 	searchFields.append($("<label>").attr("for", "feature_search").text("Feature search: ").attr("class", "search_label"));
 	searchFields.append($("<input>").attr("type", "text").attr("id", "feature_search"));
-	searchFields.append($("<input>").attr("type", "button").attr("id", "feature_search_btn").attr("value", "Sumbit").attr("onclick", "sendQuery(this)"));
+	searchFields.append($("<input>").attr("type", "button").attr("id", "feature_search_btn").attr("value", "Submit").attr("onclick", "sendQuery(this)"));
 	searchFields.append($("<p>").attr("class", "info").html(
 		"Input a list of comma-separated IPA features. Some or all of the features can be preceded by a ‘-’ symbol. A list of inventories having segments exhibiting all the features without ‘-’ and lacking all the features with ‘-’ will be returned. Features can be simple (‘plosive’, ‘glottalised’, 'triphthong') or composite (‘voiceless fricative’, ‘retroflex tap’). An example search: ‘voiced lateral fricative, -lateral affricate’.<br />The following features are supported: <em>advanced, advanced-tongue-root, affricate, affricated, alveolar, alveolo-palatal, apical, approximant, aspirated, back, bilabial, breathy-voiced, central, centralised, close, close-mid, creaky-voiced, dental, diphthong, epiglottal, faucalised, fricative, front, glottal, glottalised, half-long, hissing-hushing, implosive, labial-palatal, labial-velar, labialised, labiodental, lateral, lateral-released, less-rounded, long, lowered, mid, mid-centralised, more-rounded, nasal, nasalised, near-back, near-close, near-front, near-open, non-syllabic, open, open-mid, palatal, palatal-velar, palatalised, pharyngeal, pharyngealised, plosive, postalveolar, pre-aspirated, pre-glottalised, pre-labialised, pre-nasalised, raised, retracted, retracted-tongue-root, retroflex, rhotic, rounded, syllabic, tap, trill, triphthong, ultra-short, unreleased, unrounded, uvular, velar, velarised, voiced, voiceless, weakly-articulated</em>."
 		))
@@ -441,7 +454,7 @@ function showSegmentView() {
 	$("#main").empty();
 	$("#main").css({"height": "auto", "background-color": "white", "overflow": "auto"});
 	$.ajax({
-		url: "http://eurasianphonology.info/jsonp",
+		url: "http://192.169.217.229/jsonp",
 		dataType: "jsonp",
 		data: {
 			requestAllSegments: "true",
@@ -459,7 +472,7 @@ function searchForThis(s) {
 	var myCallback = "clearAndFormat";
 	var query = $(s).text();
 	$.ajax({
-			url: "http://eurasianphonology.info/jsonp",
+			url: "http://192.169.217.229/jsonp",
 			dataType: "jsonp",
 			data: {
 				dialects: "dialects",
@@ -508,7 +521,7 @@ function sendQuery(btn) {
 	}
 	if ($("#include_dialects").is(":checked")) {
 		$.ajax({
-			url: "http://eurasianphonology.info/jsonp",
+			url: "http://192.169.217.229/jsonp",
 			dataType: "jsonp",
 			data: {
 				dialects: "dialects",
@@ -519,7 +532,7 @@ function sendQuery(btn) {
 		});	
 	} else {
 		$.ajax({
-			url: "http://eurasianphonology.info/jsonp",
+			url: "http://192.169.217.229/jsonp",
 			dataType: "jsonp",
 			data: {
 				search_type: search_type,
@@ -788,7 +801,7 @@ function showDataBelow(btn) {
 		var langId = $("#alphaList").val();
 	}
 	$.ajax({
-		url: "http://eurasianphonology.info/jsonp",
+		url: "http://192.169.217.229/jsonp",
 		dataType: "jsonp",
 		data: {
 			provideInventoryTable: langId,

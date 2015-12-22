@@ -35,7 +35,7 @@ BILABIAL = {'b', 'm', 'p', 'ɸ', 'ʙ', 'β', 'ɓ'}
 LABIAL_VELAR = {'w', 'ʍ'}
 LABIAL_PALATAL = {'ɥ'}
 LABIODENTAL = {'f', 'v', 'ɱ', 'ʋ'}
-DENTAL = {'ð', 'θ'}
+INTERDENTAL = {'ð', 'θ'}
 ALVEOLAR = {'ɗ', 'ɹ', 'ɾ', 'ɮ', 'ɬ', 'r', 't', 'n', 'ɫ', 'l', 'd', 's', 'z', 'ɺ'}
 POSTALVEOLAR = {'ʃ', 'ʒ'}
 HISSING_HUSHING = {'ƺ', 'ʓ'} # Never mind the bollocks: ŝ and ẑ are automatically converted to these symbols.
@@ -49,8 +49,8 @@ PHARYNGEAL = {'ħ', 'ʕ'}
 GLOTTAL = {'ʔ', 'h', 'ɦ'}
 EPIGLOTTAL = {'ʜ', 'ʢ', 'ʡ'}
 
-PLACES = [BILABIAL, LABIAL_VELAR, LABIAL_PALATAL, LABIODENTAL, DENTAL, ALVEOLAR, POSTALVEOLAR, HISSING_HUSHING, RETROFLEX, ALVEOLO_PALATAL, PALATAL, PALATAL_VELAR, VELAR, UVULAR, PHARYNGEAL, GLOTTAL, EPIGLOTTAL]
-PLACES_NAMES = ['bilabial', 'labial-velar', 'labial-palatal', 'labiodental', 'dental', 'alveolar', 'postalveolar', 'hissing-hushing', 'retroflex', 'alveolo-palatal', 'palatal', 'palatal-velar', 'velar', 'uvular', 'pharyngeal', 'glottal', 'epiglottal']
+PLACES = [BILABIAL, LABIAL_VELAR, LABIAL_PALATAL, LABIODENTAL, INTERDENTAL, ALVEOLAR, POSTALVEOLAR, HISSING_HUSHING, RETROFLEX, ALVEOLO_PALATAL, PALATAL, PALATAL_VELAR, VELAR, UVULAR, PHARYNGEAL, GLOTTAL, EPIGLOTTAL]
+PLACES_NAMES = ['bilabial', 'labial-velar', 'labial-palatal', 'labiodental', 'interdental', 'alveolar', 'postalveolar', 'hissing-hushing', 'retroflex', 'alveolo-palatal', 'palatal', 'palatal-velar', 'velar', 'uvular', 'pharyngeal', 'glottal', 'epiglottal']
 
 # Vowels by openness.
 
@@ -69,9 +69,9 @@ ALL_VOWELS.update({'ɿ', 'ʅ', 'ʮ', 'ʯ'})
 
 # Vowels by position.
 
-FRONT = {'i', 'y', 'e', 'ø', 'e\u031e', 'ø\u031e', 'ɛ', 'œ', 'æ', 'a', 'ɶ'}
+FRONT = {'i', 'y', 'e', 'ø', 'e\u031e', 'ø\u031e', 'ɛ', 'œ', 'æ', 'ɶ'}
 NEAR_FRONT = {'ɪ', 'ʏ'}
-CENTRAL = {'ɪ\u0308', 'ʊ\u0308', 'ä', 'ɐ', 'ɘ', 'ɚ', 'ə', 'ɜ', 'ɞ', 'ɨ', 'ɵ', 'ʉ'}
+CENTRAL = {'ɪ\u0308', 'ʊ\u0308', 'a', 'ä', 'ɐ', 'ɘ', 'ɚ', 'ə', 'ɜ', 'ɞ', 'ɨ', 'ɵ', 'ʉ'}
 NEAR_BACK = {'ʊ'}
 BACK = {'o', 'u', 'ɑ', 'ɒ', 'ɔ', 'ɤ', 'ɯ', 'ʌ', 'o\u031e', 'ɤ\u031e'}
 
@@ -135,6 +135,7 @@ POST_FEATURES = {
     '\u031a': 'unreleased',
     '\u033a': 'apical',
     '\u02e2': 'affricated'
+    '\u1dbb': 'affricated'
 }
 
 def parseCons(phon):
@@ -301,6 +302,9 @@ def parsePhon(phon):
     if 'lateral_tap' in core_attributes:
         core_attributes.add('lateral')
         core_attributes.add('tap')
+    # Make non-laterals a class.
+    if not 'lateral' in core_attributes:
+        core_attributes.add('non_lateral')
     # Check for dental-alveolar conflict.
     if 'dental' in post_attributes:
         post_attributes.remove('dental')
@@ -334,7 +338,7 @@ def main():
 #         reply = input()
 #         if reply in {'n', 'N', 'no'}:
 #             break
-    for phon in ['v̥']:
+    for phon in ['ð', 'θ']:
         print(phon, parsePhon(phon))
 
 if __name__ == '__main__':

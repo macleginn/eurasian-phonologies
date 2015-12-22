@@ -1,19 +1,27 @@
 body {
-	font-family: 'open sans';
 	padding: 0;
 	margin: 0;
 	overflow: scroll;
+}
+
+.open-sans {
+	font-family: 'open sans';
 }
 
 div {
 	display: inline-block;
 }
 
+.navLink {
+	color: black;
+}
+
 .hrefHolder {
-	height: 25px;
-	padding: 5px;
-	padding-right: 5px;
+	background-color: beige;
+	min-height: 60px;
+	min-width: 150px;
 	margin: 0;
+	padding: 0;
 }
 
 .hrefHolder:hover {
@@ -49,6 +57,7 @@ div {
 	width: 100%;
 	text-align: left;
 	background-color: Beige;
+	word-wrap: none;
 }
 
 #menu {

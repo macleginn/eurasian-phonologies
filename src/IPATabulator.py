@@ -38,6 +38,9 @@ def makeTableCons(consList):
     pooledFeatures = set()
     for phon in consList:
         pooledFeatures.update(phon.coreSet)
+    if 'interdental' in pooledFeatures:
+        pooledFeatures.discard('interdental')
+        pooledFeatures.add('dental')
     columns = [item for item in CONS_COL_NAMES if item in pooledFeatures]
     rows    = [item for item in CONS_ROW_NAMES if item in pooledFeatures]
     table   = [['' for i in range(len(columns) + 1)] for j in range(len(rows) + 1)]
@@ -55,6 +58,9 @@ def makeTableCons(consList):
                     trimmed_set.discard('fricative')
                 if 'lateral_approximant' in trimmed_set:
                     trimmed_set.discard('approximant')
+                if 'interdental' in trimmed_set:
+                    trimmed_set.discard('interdental')
+                    trimmed_set.add('dental')
                 if rows[i - 1] in trimmed_set and columns[j - 1] in trimmed_set:
                     checkList.discard(phon)
                     temp.append(str(phon))
@@ -179,27 +185,27 @@ def processInventory(idiomName, phonoString, with_title):
 
     out = StringIO()
     if with_title:
-        out.write('<div class="phono_tables"><h1>%s</h1>' % (idiomName.split('#')[0]))
+        out.write('<div class="phono_tables"><h3>%s</h3>' % (idiomName.split('#')[0]))
     if conClassDict:
-        out.write("<h2>Consonants</h2>")
+        out.write("<h4>Consonants</h4>")
         keys = sorted(conClassDict.keys(), key = lambda x: len(x))
         for key in keys:
-            out.write("<h3>" + key[0].upper() + key[1:] + " series:</h3>")
+            out.write("<h5>" + key[0].upper() + key[1:] + " series:</h5>")
             out.write(convert2HTML(makeTableCons(conClassDict[key])))
     if vowClassDict:
-        out.write("<h2>Vowels</h2>")
+        out.write("<h4>Vowels</h4>")
         keys = sorted(vowClassDict.keys(), key = lambda x: len(x))
         for key in keys:
-            out.write("<h3>" + key[0].upper() + key[1:] + " series:</h3>")
+            out.write("<h5>" + key[0].upper() + key[1:] + " series:</h5>")
             out.write(convert2HTML(makeTableVow(vowClassDict[key])))
     if apical_vowels:
-        out.write("<h3>Apical vowels:</h3>")
+        out.write("<h5>Apical vowels:</h5>")
         out.write("<p>" + ", ".join(str(el) for el in apical_vowels))
     if diphthongs:
-        out.write("<h3>Diphthongs:</h3>")
+        out.write("<h5>Diphthongs:</h5>")
         out.write("<p>" + ", ".join(str(el) for el in diphthongs))
     if triphthongs:
-        out.write("<h3>Triphthongs:</h3>")
+        out.write("<h5>Triphthongs:</h5>")
         out.write("<p>" + ", ".join(str(el) for el in triphthongs))
     if with_title:
         out.write('</div>')
