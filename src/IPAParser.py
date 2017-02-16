@@ -38,7 +38,7 @@ LABIODENTAL = {'f', 'v', 'ɱ', 'ʋ'}
 INTERDENTAL = {'ð', 'θ'}
 ALVEOLAR = {'ɗ', 'ɹ', 'ɾ', 'ɮ', 'ɬ', 'r', 't', 'n', 'ɫ', 'l', 'd', 's', 'z', 'ɺ'}
 POSTALVEOLAR = {'ʃ', 'ʒ'}
-HISSING_HUSHING = {'ƺ', 'ʓ'} # Never mind the bollocks: ŝ and ẑ are automatically converted to these symbols.
+HISSING_HUSHING = {'ƺ', 'ʓ'} # ŝ and ẑ are automatically converted to these symbols.
 RETROFLEX = {'ɖ', 'ɭ', 'ɳ', 'ɻ', 'ɽ', 'ʂ', 'ʈ', 'ʐ', 'ᶑ'}
 ALVEOLO_PALATAL = {'ɕ', 'ʑ'}
 PALATAL = {'c', 'j', 'ç', 'ɟ', 'ɲ', 'ʎ', 'ʝ', 'ʄ'}
@@ -87,6 +87,7 @@ ROUNDED = {'y', 'ʉ', 'u', 'ʏ', 'ʊ\u0308', 'ʊ', 'ø', 'ɵ', 'o', 'ø\u031e', 
 PRE_FEATURES = {
     '\u02c0': 'pre-glottalised',
     '\u02bc': 'pre-glottalised',
+    '\u2019': 'pre-glottalised',
     '\u02b0': 'pre-aspirated',
     '\u02b1': 'pre-aspirated',
     '\u207f': 'pre-nasalised',
@@ -98,10 +99,11 @@ POST_FEATURES = {
     '\u02b1': 'aspirated',
     '\u02e4': 'pharyngealised',
     '\u02c0': 'glottalised',
+    '\u02bc': 'glottalised',
+    '\u2019': 'glottalised',
     '\u0303': 'nasalised',
     '\u02b7': 'labialised',
     '\u0306': 'ultra-short',
-    '\u02bc': 'glottalised',
     '\u02e0': 'velarised',
     '\u0334': 'velarised',
     '\u0348': 'faucalised',
