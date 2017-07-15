@@ -98,6 +98,7 @@ POST_FEATURES = {
     '\u02b0': 'aspirated',
     '\u02b1': 'aspirated',
     '\u02e4': 'pharyngealised',
+    '\u02c1': 'pharyngealised',
     '\u02c0': 'glottalised',
     '\u02bc': 'glottalised',
     '\u2019': 'glottalised',
